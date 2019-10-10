@@ -19,7 +19,8 @@ public class Ft_enrolWebservice {
     public static void main(String[] args) {
         // TODO code application logic here
         Enroll enroll = new Enroll();
-        enroll.show();
+       enroll.setVisible(true);
+       
     }
     
 }
