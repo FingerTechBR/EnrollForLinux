@@ -340,36 +340,66 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
         boolean bStop = false;
         int nFingerIndex = 0;
         NBioBSPJNI.INPUT_FIR inputFIR = bsp.new INPUT_FIR();        
-        for(int capturaindex = 0; nFingerIndex < 11; capturaindex++){
-            if(m_CaptureFIRs[nFingerIndex][0] != null && m_CaptureFIRs[capturaindex][1] != null){
-               exportData.FingerData[nFingerIndex] = exportEngine.new FINGER_DATA();
-               exportData.FingerData[nFingerIndex].FingerID = (byte)(capturaindex + 1);
-               exportData.FingerData[nFingerIndex].Template = new NBioBSPJNI.Export.TEMPLATE_DATA[2];
-               for (int s = 0 ; s < 2 ; s++) {
-                    inputFIR.SetFIRHandle(m_CaptureFIRs[capturaindex][s]);
+        for (int nCaptureIndex = 0 ; nCaptureIndex < 10 ; nCaptureIndex++) {	
+			
+            if (m_CaptureFIRs[nCaptureIndex][0] != null && m_CaptureFIRs[nCaptureIndex][1] != null) {
+                exportData.FingerData[nFingerIndex] = exportEngine.new FINGER_DATA();
+                exportData.FingerData[nFingerIndex].FingerID = (byte)(nCaptureIndex + 1);
+                exportData.FingerData[nFingerIndex].Template = new NBioBSPJNI.Export.TEMPLATE_DATA[2];
+                for (int s = 0 ; s < 2 ; s++) {
+                    inputFIR.SetFIRHandle(m_CaptureFIRs[nCaptureIndex][s]);
                     NBioBSPJNI.Export.DATA exportCaptureData = exportEngine.new DATA();					
                     exportEngine.ExportFIR(inputFIR, exportCaptureData, byConvType);
+
                     if (CheckError()) {
                             bStop = true;
                             break;
                     }
                     exportData.FingerData[nFingerIndex].Template[s] = exportEngine.new TEMPLATE_DATA();
-                    exportData.FingerData[nFingerIndex].Template[s].Data = exportCaptureData.FingerData[0].Template[0].Data;
-                    
-                    }
-
-                    nFingerIndex++;
-                }
-                if (bStop) break;
+                    exportData.FingerData[nFingerIndex].Template[s].Data = exportCaptureData.FingerData[0].Template[0].Data;                  
             }
+                    nFingerIndex++;
+            }
+            if (bStop) break;
+        }
+
         if (m_EnrollFIR != null) {
-            m_EnrollFIR.dispose();
-            m_EnrollFIR = null; 
-        }      
+                m_EnrollFIR.dispose();
+                m_EnrollFIR = null;
+        }
+        m_EnrollFIR = bsp.new FIR_HANDLE();
+        exportEngine.ImportFIR(exportData, m_EnrollFIR);
+        if (!CheckError())
+        {
+                mudar_status("Template Criado Com Sucesso");
+
+        }
+
+        inputFIR = null;
+
+	     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        
+       if (m_EnrollFIR == null) {
+			        mudar_status("Enroll FIR is null");
+			return;
+		}
+		
+		NBioBSPJNI.INPUT_FIR inputFIR = bsp.new INPUT_FIR();
+		inputFIR.SetFIRHandle(m_EnrollFIR);
+		
+		Boolean bResult = new Boolean(false);
+		bsp.Verify(inputFIR, bResult, null);
+		
+		if (!CheckError()) {
+			if (bResult)
+				mudar_status("verify OK");
+			else
+				mudar_status("verify failed");
+		}
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
