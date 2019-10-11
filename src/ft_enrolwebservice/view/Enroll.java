@@ -7,8 +7,10 @@ package ft_enrolwebservice.view;
 
 import com.nitgen.SDK.BSP.NBioBSPJNI;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,11 +33,13 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
       private NBioBSPJNI.WINDOW_OPTION m_bspWindowOption;
       private NBioBSPJNI.FIR_HANDLE [][] m_CaptureFIRs;
       private NBioBSPJNI.FIR_HANDLE m_EnrollFIR;
+       Icon warnIcon;
       
     
     public Enroll() {        
        m_CaptureFIRs = new NBioBSPJNI.FIR_HANDLE[11][2];
-       bsp = new NBioBSPJNI();      
+       bsp = new NBioBSPJNI(); 
+        warnIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/ft_enrolwebservice/imagens/circleT.png")));
        
         initComponents(); 
         if(CheckError()){
@@ -109,9 +113,9 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
                 m_CaptureFIRs[dedo][s] = hCaptureFIR;                
             }
          }  
-        mudar_status("Capture success INDEX[ " + dedo + " ]");
-                //btn.setBackground(Color.red);  
-                Icon warnIcon = new ImageIcon("src\\ft_enrolwebservice\\imagens\\circleT.png");
+              
+        
+                mudar_status("Capture success INDEX[ " + dedo + " ]");
                 btn.setIcon(warnIcon);
      }
     
@@ -190,6 +194,8 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         minimo_dir = new javax.swing.JButton();
         minimo_esque = new javax.swing.JButton();
@@ -203,13 +209,21 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
         anelar_dir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jl_status = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jl_status = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(350, 400));
-        setSize(new java.awt.Dimension(250, 250));
+        setPreferredSize(new java.awt.Dimension(420, 435));
+        setResizable(false);
+        setSize(new java.awt.Dimension(400, 380));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setRequestFocusEnabled(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Captura"));
@@ -221,60 +235,66 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
         minimo_dir.setBackground(new java.awt.Color(255, 255, 255));
         minimo_dir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         minimo_dir.setBorder(null);
-        jPanel2.add(minimo_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 18, 18));
+        jPanel2.add(minimo_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 18, 18));
 
         minimo_esque.setBackground(new java.awt.Color(255, 255, 255));
         minimo_esque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         minimo_esque.setBorder(null);
-        jPanel2.add(minimo_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 18, 18));
+        jPanel2.add(minimo_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 18, 18));
 
         anelar_esque.setBackground(new java.awt.Color(255, 255, 255));
         anelar_esque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         anelar_esque.setBorder(null);
-        jPanel2.add(anelar_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 18, 18));
+        jPanel2.add(anelar_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 18, 18));
 
         medio_esque.setBackground(new java.awt.Color(255, 255, 255));
         medio_esque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         medio_esque.setBorder(null);
-        jPanel2.add(medio_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 18, 18));
+        jPanel2.add(medio_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 18, 18));
 
         indicador_esque.setBackground(new java.awt.Color(255, 255, 255));
         indicador_esque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         indicador_esque.setBorder(null);
-        jPanel2.add(indicador_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 18, 18));
+        jPanel2.add(indicador_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 18, 18));
 
         polegador_esque.setBackground(new java.awt.Color(255, 255, 255));
         polegador_esque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         polegador_esque.setBorder(null);
-        jPanel2.add(polegador_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 18, 18));
+        jPanel2.add(polegador_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 18, 18));
 
         polegador_dir.setBackground(new java.awt.Color(255, 255, 255));
         polegador_dir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         polegador_dir.setBorder(null);
-        jPanel2.add(polegador_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 18, 18));
+        jPanel2.add(polegador_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 18, 18));
 
         indicador_dir.setBackground(new java.awt.Color(255, 255, 255));
         indicador_dir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         indicador_dir.setBorder(null);
-        jPanel2.add(indicador_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 18, 18));
+        jPanel2.add(indicador_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 18, 18));
 
         medio_dir.setBackground(new java.awt.Color(255, 255, 255));
         medio_dir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         medio_dir.setBorder(null);
-        jPanel2.add(medio_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 18, 18));
+        jPanel2.add(medio_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 18, 18));
 
         anelar_dir.setBackground(new java.awt.Color(255, 255, 255));
         anelar_dir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         anelar_dir.setBorder(null);
-        jPanel2.add(anelar_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 18, 18));
+        jPanel2.add(anelar_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 18, 18));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/mao.png"))); // NOI18N
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, 180));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, 180));
 
-        jLabel1.setText("jLabel1");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 110, 30));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/logo200x37.png"))); // NOI18N
 
-        jl_status.setText("Status:");
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/NITGEN - Logo_123px.png"))); // NOI18N
+
+        jButton2.setText("Comparar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Finalizar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -283,41 +303,86 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
             }
         });
 
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(31, 31, 31))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(17, 17, 17)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(17, Short.MAX_VALUE)))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap())
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(45, 45, 45)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(51, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 2, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 5, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+
+        jl_status.setText("Status:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jl_status))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jButton1)
-                        .addGap(81, 81, 81)
-                        .addComponent(jButton2)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jl_status)
+                .addContainerGap(362, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jl_status)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 381, Short.MAX_VALUE)
+                .addComponent(jl_status))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -458,7 +523,10 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel jl_status;
     private javax.swing.JButton medio_dir;
     private javax.swing.JButton medio_esque;
