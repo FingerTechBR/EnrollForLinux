@@ -9,11 +9,10 @@ import com.nitgen.SDK.BSP.NBioBSPJNI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
+
 
 
 /**
@@ -23,7 +22,7 @@ import javax.swing.JLabel;
 public class Enroll extends javax.swing.JFrame implements ActionListener {
 
     /**
-     * Creates new form Enroll
+     *  variáveis 
      */
       private NBioBSPJNI bsp;
       private NBioBSPJNI.FIR_HANDLE template;
@@ -33,19 +32,12 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
       private NBioBSPJNI.FIR_HANDLE [][] m_CaptureFIRs;
       private NBioBSPJNI.FIR_HANDLE m_EnrollFIR;
       
-      
-      int control = 0;
-      
-    public Enroll() {
-        
-        m_CaptureFIRs = new NBioBSPJNI.FIR_HANDLE[11][2];
-       bsp = new NBioBSPJNI();
+    
+    public Enroll() {        
+       m_CaptureFIRs = new NBioBSPJNI.FIR_HANDLE[11][2];
+       bsp = new NBioBSPJNI();      
        
-       
-        initComponents();
-        
-        
-       
+        initComponents(); 
         if(CheckError()){
             return;
         } else{
@@ -57,6 +49,7 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
         
         
         
+        //aqui adicionar os listeners aos botões
         minimo_dir.addActionListener(this);
         minimo_esque.addActionListener(this);
         anelar_esque.addActionListener(this);
@@ -73,54 +66,56 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
       
     }
 
+    
+    
     @Override
     public void actionPerformed(ActionEvent e) {
          JButton btn = (JButton) e.getSource();
         if(e.getSource() == minimo_esque ){     
-            CapturaDedo(10);
-            btn.setBackground(Color.red);            
+            CapturaDedo(10,btn);                      
         } else if(e.getSource() == anelar_esque ){
-           CapturaDedo(9);                            
+           CapturaDedo(9,btn);                            
         } else if(e.getSource() == medio_esque ){ 
-            CapturaDedo(8); 
+           CapturaDedo(8,btn); 
         } else if(e.getSource() == indicador_esque ){
-            CapturaDedo(7); 
+           CapturaDedo(7,btn); 
         } else if(e.getSource() == polegador_esque ){
-            CapturaDedo(6); 
+           CapturaDedo(6,btn); 
         } else if(e.getSource() == polegador_dir ){
-            CapturaDedo(1); 
+           CapturaDedo(1,btn); 
         } else if(e.getSource() == indicador_dir ){      
-            CapturaDedo(2); 
+           CapturaDedo(2,btn); 
         } else if(e.getSource() == medio_dir ){
-            CapturaDedo(3); 
+           CapturaDedo(3,btn); 
         } else if(e.getSource() == anelar_dir ){
-            CapturaDedo(4); 
+           CapturaDedo(4,btn); 
         } else if(e.getSource() == minimo_dir){
-            CapturaDedo(5);
+           CapturaDedo(5,btn);
             
         }
     }
     
-    private void CapturaDedo(int dedo){
+    
+    //Captura digital adicionar ao index 2 dedos em cada captura ** necessário para dar merge
+    private void CapturaDedo(int dedo, JButton btn){
         for (int s = 0 ; s < 2 ; s++) {
             NBioBSPJNI.FIR_HANDLE hCaptureFIR  = bsp.new FIR_HANDLE();
             bsp.Capture(NBioBSPJNI.FIR_PURPOSE.VERIFY, hCaptureFIR, -1, null, m_bspWindowOption);
-            if (!CheckError())
-            {
+            if (!CheckError()){
                 if (m_CaptureFIRs[dedo][s] != null) {
                     m_CaptureFIRs[dedo][s].dispose();
                     m_CaptureFIRs[dedo][s] = null;
                 }
-
-                m_CaptureFIRs[dedo][s] = hCaptureFIR;
-                mudar_status("Capture success INDEX[ " + dedo + " ]");
-
-                //hCaptureFIR.dispose();
+                m_CaptureFIRs[dedo][s] = hCaptureFIR;                
             }
          }  
+        mudar_status("Capture success INDEX[ " + dedo + " ]");
+                //btn.setBackground(Color.red);  
+                Icon warnIcon = new ImageIcon("src\\ft_enrolwebservice\\imagens\\circleT.png");
+                btn.setIcon(warnIcon);
      }
     
-    
+    //Converte TextEncode para FIR_HANDLE
     public NBioBSPJNI.FIR_TEXTENCODE FirToText(NBioBSPJNI.FIR_HANDLE fir){
         
         NBioBSPJNI.FIR_TEXTENCODE  text = bsp.new FIR_TEXTENCODE();
@@ -129,61 +124,61 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
         
     }
     
+    //Convert input_FIR para TextEncode
     public NBioBSPJNI.INPUT_FIR TextToFir(NBioBSPJNI.FIR_TEXTENCODE fir){
         
-         NBioBSPJNI.INPUT_FIR inputfir = bsp.new INPUT_FIR();         
-         inputfir.SetTextFIR(fir);
-         return inputfir;
+        NBioBSPJNI.INPUT_FIR inputfir = bsp.new INPUT_FIR();         
+        inputfir.SetTextFIR(fir);
+        return inputfir;
        
          
         
     }
     
-       public NBioBSPJNI.FIR HandleToFir(NBioBSPJNI.FIR_HANDLE fir){
-        
-         NBioBSPJNI.FIR inputfir = bsp.new FIR();         
-         bsp.GetFIRFromHandle(fir, inputfir);
-         return inputfir;
+        //Converte FIR para Fir_Handle
+    public NBioBSPJNI.FIR HandleToFir(NBioBSPJNI.FIR_HANDLE fir){
+
+      NBioBSPJNI.FIR inputfir = bsp.new FIR();         
+      bsp.GetFIRFromHandle(fir, inputfir);
+      return inputfir;
        
          
         
     }
     
-        public NBioBSPJNI.INPUT_FIR FirToInputFir(NBioBSPJNI.FIR fir){
+    //Convert InputFir para FIR
+    public NBioBSPJNI.INPUT_FIR FirToInputFir(NBioBSPJNI.FIR fir){
         
-         NBioBSPJNI.INPUT_FIR inputfir = bsp.new INPUT_FIR();         
-         inputfir.SetFullFIR(fir);
-         return inputfir;
+     NBioBSPJNI.INPUT_FIR inputfir = bsp.new INPUT_FIR();         
+     inputfir.SetFullFIR(fir);
+     return inputfir;
        
          
         
     }
         
         
-        
-        public Boolean CheckError()
-    {
+        //Verifica existência de erros no módulo BSP
+        public Boolean CheckError() {
         if (bsp.IsErrorOccured())  {
             mudar_status("NBioBSP Error Occured [" + bsp.GetErrorCode() + "]");
             return true;
         }
-
         return false;
     }
         public void mudar_status(String text){
-           
-           
             jl_status.setText(text);
         }
 
+        
+        //Itinerar dedos
 	private byte GetFingerCount() {
             byte nCount = 0;
             for (int i = 0 ; i < 10 ; i++) {
-                    if (m_CaptureFIRs[i][0] != null && m_CaptureFIRs[i][1] != null) {
-                            nCount++;
-                    }
+                if (m_CaptureFIRs[i][0] != null && m_CaptureFIRs[i][1] != null) {
+                        nCount++;
+                }
             }
-
             return nCount;
 	}
     /**
@@ -216,50 +211,60 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
         setPreferredSize(new java.awt.Dimension(350, 400));
         setSize(new java.awt.Dimension(250, 250));
 
-        jPanel2.setBackground(new java.awt.Color(251, 251, 251));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Captura"));
         jPanel2.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         jPanel2.setMinimumSize(new java.awt.Dimension(276, 240));
         jPanel2.setPreferredSize(new java.awt.Dimension(522, 436));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        minimo_dir.setBackground(new java.awt.Color(204, 255, 204));
+        minimo_dir.setBackground(new java.awt.Color(255, 255, 255));
+        minimo_dir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         minimo_dir.setBorder(null);
         jPanel2.add(minimo_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 18, 18));
 
-        minimo_esque.setBackground(new java.awt.Color(204, 255, 204));
+        minimo_esque.setBackground(new java.awt.Color(255, 255, 255));
+        minimo_esque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         minimo_esque.setBorder(null);
         jPanel2.add(minimo_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 18, 18));
 
-        anelar_esque.setBackground(new java.awt.Color(204, 255, 204));
+        anelar_esque.setBackground(new java.awt.Color(255, 255, 255));
+        anelar_esque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         anelar_esque.setBorder(null);
         jPanel2.add(anelar_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 18, 18));
 
-        medio_esque.setBackground(new java.awt.Color(204, 255, 204));
+        medio_esque.setBackground(new java.awt.Color(255, 255, 255));
+        medio_esque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         medio_esque.setBorder(null);
         jPanel2.add(medio_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 18, 18));
 
-        indicador_esque.setBackground(new java.awt.Color(204, 255, 204));
+        indicador_esque.setBackground(new java.awt.Color(255, 255, 255));
+        indicador_esque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         indicador_esque.setBorder(null);
         jPanel2.add(indicador_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 18, 18));
 
-        polegador_esque.setBackground(new java.awt.Color(204, 255, 204));
+        polegador_esque.setBackground(new java.awt.Color(255, 255, 255));
+        polegador_esque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         polegador_esque.setBorder(null);
         jPanel2.add(polegador_esque, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 18, 18));
 
-        polegador_dir.setBackground(new java.awt.Color(204, 255, 204));
+        polegador_dir.setBackground(new java.awt.Color(255, 255, 255));
+        polegador_dir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         polegador_dir.setBorder(null);
         jPanel2.add(polegador_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 18, 18));
 
-        indicador_dir.setBackground(new java.awt.Color(204, 255, 204));
+        indicador_dir.setBackground(new java.awt.Color(255, 255, 255));
+        indicador_dir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         indicador_dir.setBorder(null);
         jPanel2.add(indicador_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 18, 18));
 
-        medio_dir.setBackground(new java.awt.Color(204, 255, 204));
+        medio_dir.setBackground(new java.awt.Color(255, 255, 255));
+        medio_dir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         medio_dir.setBorder(null);
         jPanel2.add(medio_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 18, 18));
 
-        anelar_dir.setBackground(new java.awt.Color(204, 255, 204));
+        anelar_dir.setBackground(new java.awt.Color(255, 255, 255));
+        anelar_dir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ft_enrolwebservice/imagens/circleV.png"))); // NOI18N
         anelar_dir.setBorder(null);
         jPanel2.add(anelar_dir, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 18, 18));
 
@@ -321,11 +326,10 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         byte byfingerCount = GetFingerCount();
-        byte byConvType = NBioBSPJNI.EXPORT_MINCONV_TYPE.FDU;
-        
+        byte byConvType = NBioBSPJNI.EXPORT_MINCONV_TYPE.FDU;        
         if (byfingerCount == 0) {
            mudar_status("Not Exist Capture Data");
-            return;
+           return;
         }
         
         
@@ -355,23 +359,22 @@ public class Enroll extends javax.swing.JFrame implements ActionListener {
                             bStop = true;
                             break;
                     }
-                    exportData.FingerData[nFingerIndex].Template[s] = exportEngine.new TEMPLATE_DATA();
-                    exportData.FingerData[nFingerIndex].Template[s].Data = exportCaptureData.FingerData[0].Template[0].Data;                  
+                exportData.FingerData[nFingerIndex].Template[s] = exportEngine.new TEMPLATE_DATA();
+                exportData.FingerData[nFingerIndex].Template[s].Data = exportCaptureData.FingerData[0].Template[0].Data;                  
             }
-                    nFingerIndex++;
+            nFingerIndex++;
             }
             if (bStop) break;
         }
-
         if (m_EnrollFIR != null) {
-                m_EnrollFIR.dispose();
-                m_EnrollFIR = null;
+            m_EnrollFIR.dispose();
+            m_EnrollFIR = null;
         }
         m_EnrollFIR = bsp.new FIR_HANDLE();
         exportEngine.ImportFIR(exportData, m_EnrollFIR);
         if (!CheckError())
         {
-                mudar_status("Template Criado Com Sucesso");
+            mudar_status("Template Criado Com Sucesso");
 
         }
 
