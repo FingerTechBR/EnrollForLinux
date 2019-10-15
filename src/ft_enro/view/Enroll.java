@@ -101,7 +101,7 @@ public class Enroll extends javax.swing.JFrame implements ActionListener{
            return bsp.new FIR_HANDLE();
         }
        
-        disable();
+        dispose();
         return m_EnrollFIR;
     }
     
@@ -496,6 +496,7 @@ public class Enroll extends javax.swing.JFrame implements ActionListener{
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
