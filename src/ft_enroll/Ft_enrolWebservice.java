@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ft_enrolwebservice;
+package ft_enroll;
 
-import ft_enrolwebservice.view.Enroll;
+import ft_enro.view.Enroll;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Ft_enrolWebservice {
     public static void main(String[] args) {
         // TODO code application logic here
         Enroll enroll = new Enroll();
-       enroll.setVisible(true);
+      enroll.EnrolInit();
        
     }
     
